@@ -200,6 +200,34 @@ body::after{content:"";position:fixed;inset:0;z-index:999;pointer-events:none;op
 
 .pending{opacity:.45;cursor:default}
 .foot .soc.off{cursor:default}
+
+/* ---- Rechtliches-Overlay ---- */
+.modal{position:fixed;inset:0;z-index:200;background:#030303;display:none;height:100dvh;
+  grid-template-rows:auto minmax(0,1fr);opacity:0;transition:opacity .3s ease}
+.modal.on{display:grid}
+.modal.vis{opacity:1}
+.modal-top{display:flex;justify-content:space-between;align-items:center;
+  padding:18px 26px;border-bottom:1px solid var(--line)}
+.modal-body{overflow-y:auto;-webkit-overflow-scrolling:touch}
+.modal-inner{max-width:680px;margin:0 auto;padding:48px 26px 100px}
+.modal-body h2{font-size:clamp(32px,6vw,64px);margin-bottom:38px;letter-spacing:-.05em}
+.modal-body h3{font-size:13px;font-family:'JetBrains Mono',monospace;letter-spacing:.2em;
+  text-transform:uppercase;color:#fff;font-weight:500;margin:40px 0 16px;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
+.modal-body h3:first-of-type{margin-top:0}
+.modal-body p{font-size:15px;line-height:1.75;margin-bottom:13px}
+.modal-body b{color:#fff;font-weight:600}
+.modal-body a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.modal-body a:hover{color:var(--grey)}
+.modal-body ul{margin:0 0 15px;padding-left:20px;color:var(--grey);font-size:15px;line-height:1.75}
+.modal-body li{margin-bottom:5px}
+.modal-body .stand{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--dim)}
+.legal-link{cursor:pointer;background:none;border:0;padding:0;font:inherit;color:inherit;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
+.legal-link:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
+@media (max-width:600px){.modal-inner{padding:32px 20px 90px}}
 </style>
 </head>
 <body>
@@ -570,7 +598,7 @@ document.addEventListener('keydown',e=>{ if(!$('lb').classList.contains('on'))re
     <a class="soc" href="https://www.instagram.com/medonlladrovci" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zM12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63c-.79.3-1.46.72-2.12 1.39A5.87 5.87 0 0 0 .63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.39 2.12a5.87 5.87 0 0 0 2.12 1.39c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.87 5.87 0 0 0 2.12-1.39 5.87 5.87 0 0 0 1.39-2.12c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.87 5.87 0 0 0-1.39-2.12A5.87 5.87 0 0 0 19.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0z"/><path d="M12 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/><circle cx="18.41" cy="5.59" r="1.44"/></svg></a>
     <span class="soc off" aria-hidden="true" title="LinkedIn folgt"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg></span>
   </div>
-  <span><span class="pending">Impressum</span> · <span class="pending">Datenschutz</span></span>
+  <span><button class="legal-link" data-legal="impressum">Impressum</button> · <button class="legal-link" data-legal="datenschutz">Datenschutz</button></span>
 </div></footer>
 <script>
 (function(){var m=document.getElementById('mq');if(!m)return;
@@ -757,6 +785,135 @@ var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   });},{threshold:.5});
   els.forEach(function(el){io.observe(el);});
 })();
+})();
+
+</script>
+
+<div class="modal" id="legal" role="dialog" aria-modal="true" aria-labelledby="legal-h">
+  <div class="modal-top">
+    <span class="lbl" id="legal-kicker">Rechtliches</span>
+    <button class="x" id="legal-x" aria-label="Schließen">✕</button>
+  </div>
+  <div class="modal-body" id="legal-body"></div>
+</div>
+
+<script>
+/* ============ Impressum & Datenschutz als Overlay ============ */
+(function(){
+var IMPRESSUM = `
+<h2 id="legal-h" class="disp">Impressum</h2>
+<h3>Angaben gemäß § 5 DDG</h3>
+<p>Medon Lladrovci<br>Mozartstr. 18<br>96106 Ebern<br>Deutschland</p>
+<h3>Kontakt</h3>
+<p>Telefon: 01512 9511874<br>E-Mail: <a href="mailto:info@medon-immobilien.de">info@medon-immobilien.de</a></p>
+<h3>Umsatzsteuer-Identifikationsnummer</h3>
+<p>Umsatzsteuer-Identifikationsnummer gemäß § 27a Umsatzsteuergesetz:<br><b>DE452724560</b></p>
+<h3>Gewerberechtliche Angaben</h3>
+<p>Erlaubnis nach § 34c Abs. 1 Satz 1 Nr. 1 Gewerbeordnung (GewO) als Immobilienmakler.</p>
+<p><b>Zuständige Aufsichtsbehörde:</b><br>Industrie- und Handelskammer für München und Oberbayern<br>Max-Joseph-Straße 2<br>80333 München</p>
+<h3>Verbraucherstreitbeilegung</h3>
+<p>Ich bin nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+`;
+
+var DATENSCHUTZ = `
+<h2 id="legal-h" class="disp">Datenschutz</h2>
+
+<h3>1. Datenschutz auf einen Blick</h3>
+<p>Der Schutz Ihrer personenbezogenen Daten ist mir wichtig. Personenbezogene Daten werden auf dieser Website nur verarbeitet, soweit dies für die Bereitstellung und den sicheren Betrieb der Website erforderlich ist oder Sie mich freiwillig kontaktieren.</p>
+<p>Diese Website verwendet nach aktuellem Stand keine Analyse- oder Trackingdienste und keine nicht technisch erforderlichen Cookies.</p>
+
+<h3>2. Verantwortlicher</h3>
+<p>Verantwortlich für die Datenverarbeitung auf dieser Website ist:</p>
+<p>Medon Lladrovci<br>Mozartstr. 18<br>96106 Ebern<br>Deutschland</p>
+<p>Telefon: 01512 9511874<br>E-Mail: <a href="mailto:info@medon-immobilien.de">info@medon-immobilien.de</a></p>
+
+<h3>3. Hosting</h3>
+<p>Diese Website wird bei folgendem Anbieter gehostet:</p>
+<p><b>Spaceship, Inc.</b><br>4600 East Washington Street, Suite 300<br>Phoenix, AZ 85034<br>USA</p>
+<p>Beim Aufruf dieser Website werden technisch erforderliche Daten verarbeitet, damit die Website an Ihr Endgerät ausgeliefert werden kann und ein sicherer sowie stabiler Betrieb gewährleistet werden kann.</p>
+<p>Dabei können insbesondere folgende Daten verarbeitet werden:</p>
+<ul><li>IP-Adresse</li><li>Datum und Uhrzeit des Zugriffs</li><li>aufgerufene Seite bzw. Datei</li><li>Browsertyp und Browserversion</li><li>verwendetes Betriebssystem</li><li>Referrer-URL</li><li>technische Informationen zur Anfrage</li></ul>
+<p>Diese Daten können in Server-Logfiles gespeichert werden.</p>
+<p>Die Verarbeitung erfolgt auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in der sicheren, stabilen und technisch fehlerfreien Bereitstellung dieser Website sowie der Erkennung und Abwehr von Missbrauch und Angriffen.</p>
+<p>Die Daten werden nur so lange verarbeitet, wie dies für den Betrieb, die Sicherheit und die Fehleranalyse erforderlich ist beziehungsweise soweit gesetzliche Aufbewahrungspflichten bestehen.</p>
+<p>Spaceship verarbeitet im Rahmen der Hosting-Dienstleistungen personenbezogene Daten als Auftragsverarbeiter. Die Verarbeitung erfolgt auf Grundlage der zwischen dem Anbieter und seinen Kunden geltenden Vereinbarungen zur Auftragsverarbeitung.</p>
+<p>Da Spaceship, Inc. seinen Sitz in den USA hat, kann eine Verarbeitung oder Übermittlung personenbezogener Daten in die USA stattfinden. Für erforderliche Drittlandübermittlungen sieht Spaceship geeignete datenschutzrechtliche Garantien vor, insbesondere die von der Europäischen Kommission verabschiedeten Standardvertragsklauseln, soweit diese erforderlich sind.</p>
+<p>Weitere Informationen zum Datenschutz bei Spaceship sind in der Datenschutzerklärung des Anbieters erhältlich.</p>
+
+<h3>4. Kontaktaufnahme per E-Mail oder Telefon</h3>
+<p>Wenn Sie mich per E-Mail oder telefonisch kontaktieren, werden die von Ihnen übermittelten personenbezogenen Daten verarbeitet, um Ihre Anfrage zu bearbeiten.</p>
+<p>Hierzu können insbesondere gehören:</p>
+<ul><li>Name</li><li>E-Mail-Adresse</li><li>Telefonnummer</li><li>Inhalt Ihrer Anfrage</li><li>weitere freiwillig übermittelte Informationen</li></ul>
+<p>Wenn Ihre Kontaktaufnahme der Anbahnung oder Durchführung eines Vertrages dient, erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. b DSGVO.</p>
+<p>Bei sonstigen Anfragen erfolgt die Verarbeitung auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO. Mein berechtigtes Interesse liegt in der Bearbeitung und Beantwortung Ihrer Anfrage.</p>
+<p>Die Daten werden gelöscht, sobald sie für die Bearbeitung Ihrer Anfrage nicht mehr erforderlich sind und keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+
+<h3>5. Cookies</h3>
+<p>Diese Website verwendet nach aktuellem Stand keine nicht technisch erforderlichen Cookies.</p>
+<p>Sollten zukünftig Funktionen eingebunden werden, die Cookies oder vergleichbare Technologien einsetzen, wird diese Datenschutzerklärung entsprechend angepasst. Soweit gesetzlich erforderlich, wird vor dem Einsatz eine Einwilligung eingeholt.</p>
+
+<h3>6. Analyse und Tracking</h3>
+<p>Auf dieser Website werden nach aktuellem Stand keine Analyse- oder Trackingdienste wie beispielsweise Google Analytics eingesetzt.</p>
+<p>Es findet nach aktuellem Stand kein personenbezogenes Nutzertracking durch den Betreiber dieser Website statt.</p>
+
+<h3>7. Externe Dienste</h3>
+<p>Auf dieser Website werden nach aktuellem Stand keine externen Dienste wie Google Maps, YouTube, Meta Pixel oder vergleichbare Dienste eingebunden, durch die beim Aufruf der Website automatisch personenbezogene Daten an diese Anbieter übertragen werden.</p>
+<p>Sollten zukünftig entsprechende Dienste eingebunden werden, wird diese Datenschutzerklärung entsprechend angepasst.</p>
+
+<h3>8. SSL-/TLS-Verschlüsselung</h3>
+<p>Diese Website nutzt eine SSL- bzw. TLS-Verschlüsselung.</p>
+<p>Eine verschlüsselte Verbindung erkennen Sie unter anderem daran, dass die Adresse der Website mit „https://" beginnt.</p>
+<p>Die Verschlüsselung dient dazu, übertragene Daten vor dem Zugriff unbefugter Dritter zu schützen.</p>
+
+<h3>9. Ihre Rechte</h3>
+<p>Sie haben im Rahmen der gesetzlichen Voraussetzungen insbesondere folgende Rechte:</p>
+<ul><li>Recht auf Auskunft gemäß Art. 15 DSGVO</li><li>Recht auf Berichtigung gemäß Art. 16 DSGVO</li><li>Recht auf Löschung gemäß Art. 17 DSGVO</li><li>Recht auf Einschränkung der Verarbeitung gemäß Art. 18 DSGVO</li><li>Recht auf Datenübertragbarkeit gemäß Art. 20 DSGVO</li><li>Recht auf Widerspruch gemäß Art. 21 DSGVO</li></ul>
+<p>Soweit die Verarbeitung personenbezogener Daten auf einer Einwilligung beruht, können Sie diese Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</p>
+
+<h3>10. Widerspruchsrecht</h3>
+<p>Soweit personenbezogene Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO verarbeitet werden, haben Sie gemäß Art. 21 DSGVO das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit gegen die Verarbeitung Widerspruch einzulegen.</p>
+
+<h3>11. Beschwerderecht bei einer Aufsichtsbehörde</h3>
+<p>Sie haben gemäß Art. 77 DSGVO das Recht, sich bei einer Datenschutzaufsichtsbehörde über die Verarbeitung Ihrer personenbezogenen Daten zu beschweren.</p>
+<p>Für nichtöffentliche Stellen in Bayern ist insbesondere zuständig:</p>
+<p><b>Bayerisches Landesamt für Datenschutzaufsicht (BayLDA)</b><br>Promenade 18<br>91522 Ansbach<br>Deutschland</p>
+
+<h3>12. Änderungen dieser Datenschutzerklärung</h3>
+<p>Diese Datenschutzerklärung wird angepasst, wenn sich die Funktionen dieser Website, eingesetzte Dienste oder die gesetzlichen Anforderungen ändern.</p>
+<p class="stand">Stand: August 2026</p>
+`;
+
+var TEXTS={impressum:{kicker:'Rechtliches',html:IMPRESSUM},datenschutz:{kicker:'Rechtliches',html:DATENSCHUTZ}};
+var box=document.getElementById('legal'); if(!box) return;
+var body=document.getElementById('legal-body');
+
+function open(key){
+  var t=TEXTS[key]; if(!t) return;
+  document.getElementById('legal-kicker').textContent=t.kicker;
+  body.innerHTML='<div class="modal-inner">'+t.html+'</div>'; body.scrollTop=0;
+  box.classList.add('on');
+  requestAnimationFrame(function(){box.classList.add('vis');});
+  document.body.style.overflow='hidden';
+  history.replaceState(null,'','#'+key);
+}
+function close(){
+  box.classList.remove('vis');
+  setTimeout(function(){box.classList.remove('on');},280);
+  document.body.style.overflow='';
+  history.replaceState(null,'',location.pathname);
+}
+document.addEventListener('click',function(e){
+  var a=e.target.closest('[data-legal]');
+  if(a){ e.preventDefault(); open(a.dataset.legal); return; }
+  if(e.target===box) close();
+});
+document.getElementById('legal-x').onclick=close;
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape' && box.classList.contains('on')) close();
+});
+/* Direkter Aufruf per medonlladrovci.de#impressum */
+var h=location.hash.slice(1);
+if(TEXTS[h]) setTimeout(function(){open(h);},300);
 })();
 
 </script>
