@@ -224,6 +224,11 @@ body::after{content:"";position:fixed;inset:0;z-index:999;pointer-events:none;op
 .modal-body .stand{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);
   font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.16em;
   text-transform:uppercase;color:var(--dim)}
+.back-btn{background:none;border:0;cursor:pointer;color:var(--grey);padding:6px 0;
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  transition:color .18s ease}
+.back-btn:hover{color:#fff}
+.back-foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:50px;padding-top:30px;border-top:1px solid var(--line)}
 .legal-link{cursor:pointer;background:none;border:0;padding:0;font:inherit;color:inherit;
   font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase}
 .legal-link:hover{color:#fff;text-decoration:underline;text-underline-offset:3px}
@@ -791,7 +796,7 @@ var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 <div class="modal" id="legal" role="dialog" aria-modal="true" aria-labelledby="legal-h">
   <div class="modal-top">
-    <span class="lbl" id="legal-kicker">Rechtliches</span>
+    <button class="back-btn" id="legal-back">← Zurück zur Startseite</button>
     <button class="x" id="legal-x" aria-label="Schließen">✕</button>
   </div>
   <div class="modal-body" id="legal-body"></div>
@@ -887,20 +892,33 @@ var TEXTS={impressum:{kicker:'Rechtliches',html:IMPRESSUM},datenschutz:{kicker:'
 var box=document.getElementById('legal'); if(!box) return;
 var body=document.getElementById('legal-body');
 
+function render(key,t){
+  body.innerHTML='<div class="modal-inner">'+t.html
+    +'<div class="back-foot"><button class="btn btn-p" data-close>← Zurück zur Startseite</button>'
+    +'<button class="btn btn-g" data-other="'+(key==='impressum'?'datenschutz':'impressum')+'">'
+    +(key==='impressum'?'Datenschutz':'Impressum')+'</button></div>'
+    +'</div>';
+  body.scrollTop=0;
+}
 function open(key){
   var t=TEXTS[key]; if(!t) return;
-  document.getElementById('legal-kicker').textContent=t.kicker;
-  body.innerHTML='<div class="modal-inner">'+t.html+'</div>'; body.scrollTop=0;
+  render(key,t);
   box.classList.add('on');
   requestAnimationFrame(function(){box.classList.add('vis');});
   document.body.style.overflow='hidden';
-  history.replaceState(null,'','#'+key);
+  if(location.hash!=='#'+key) history.pushState({legal:key},'','#'+key);
 }
+function openSilent(key){ var t=TEXTS[key]; if(!t) return; render(key,t);
+  box.classList.add('on'); requestAnimationFrame(function(){box.classList.add('vis');});
+  document.body.style.overflow='hidden'; }
+function closeSilent(){ box.classList.remove('vis');
+  setTimeout(function(){box.classList.remove('on');},280);
+  document.body.style.overflow=''; }
 function close(){
   box.classList.remove('vis');
   setTimeout(function(){box.classList.remove('on');},280);
   document.body.style.overflow='';
-  history.replaceState(null,'',location.pathname);
+  if(location.hash) history.pushState(null,'',location.pathname+location.search);
 }
 document.addEventListener('click',function(e){
   var a=e.target.closest('[data-legal]');
@@ -908,6 +926,18 @@ document.addEventListener('click',function(e){
   if(e.target===box) close();
 });
 document.getElementById('legal-x').onclick=close;
+document.getElementById('legal-back').onclick=close;
+body.addEventListener('click',function(e){
+  if(e.target.closest('[data-close]')){ close(); return; }
+  var o=e.target.closest('[data-other]');
+  if(o){ open(o.dataset.other); }
+});
+/* Zurück-Taste des Browsers schließt bzw. wechselt */
+addEventListener('popstate',function(){
+  var k=location.hash.slice(1);
+  if(TEXTS[k]){ if(!box.classList.contains('on')) openSilent(k); }
+  else if(box.classList.contains('on')) closeSilent();
+});
 document.addEventListener('keydown',function(e){
   if(e.key==='Escape' && box.classList.contains('on')) close();
 });
